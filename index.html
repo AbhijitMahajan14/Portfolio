@@ -1,62 +1,930 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Abhijit Mahajan</title>
-    <link rel="stylesheet" href="Css-My Site/styles.css">
-    <link rel="icon" href="man.png">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Merriweather:wght@300&family=Montserrat:wght@100&display=swap" rel="stylesheet">  </head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abhijit Mahajan | GCP Data Engineer</title>
+    <style>
+        :root {
+            --bg-color: #111317;
+            --primary-color: #1a1d24;
+            --secondary-color: #252a33;
+            --text-color: #e0e0e0;
+            --accent-blue: #4285F4;
+            --accent-green: #34A853;
+            --accent-yellow: #FBBC05;
+            --accent-red: #EA4335;
+            --border-color: #333842;
+            --header-font: 'Poppins', sans-serif;
+            --body-font: 'Roboto', sans-serif;
+        }
+        
 
-  <body>
-    <div class="top-container">
-      <h1>I'm Abhijit</h1>
-      <h4>Final Year IT Engineering Student</h4>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Roboto:wght@300;400;display=swap');
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css');
 
-      <img class="img"src="Css-My Site\images\mountain.png" alt="mountain-img">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--body-font);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* --- Global Section Spacing & Transition --- */
+        section {
+            /* Increased spacing for distinct sections */
+            padding: 6rem 0; 
+            margin-top: 4rem; /* Add margin above sections for better separation */
+            margin-bottom: 4rem;
+            
+            /* Transition setup */
+            opacity: 0;
+            transform: translateY(40px); /* Increased initial Y-offset for a noticeable slide-up */
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out; /* Slower transition for a smoother feel */
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* Special case for the hero section */
+        #home {
+            margin-top: 0;
+            padding-top: 8rem; 
+        }
+
+        /* Class added by JS when in viewport */
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h1, h2, h3 {
+            font-family: var(--header-font);
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 1.5rem;
+        }
+        
+        h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-green), var(--accent-yellow), var(--accent-red));
+            border-radius: 2px;
+        }
+
+        /* --- Navigation --- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(17, 19, 23, 0.9); /* Slightly more opaque */
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: box-shadow 0.3s ease, top 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .nav-logo a span {
+            color: var(--accent-blue);
+        }
+
+        .nav-links { list-style: none; display: flex; }
+        .nav-links li { margin-left: 2rem; }
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 400;
+            transition: color 0.3s ease;
+            position: relative;
+            padding-bottom: 5px;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; width: 0; height: 2px;
+            bottom: 0; left: 0; background-color: var(--accent-blue);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover, .nav-links a.active { color: #fff; }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        .menu-toggle { display: none; font-size: 1.5rem; background: none; border: none; color: white; cursor: pointer; }
+
+        /* --- Hero Section --- */
+        #home {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background-color: var(--bg-color);
+        }
+        /* Changed to centered alignment */
+        .hero-content { text-align: center; max-width: 800px; margin: 0 auto; }
+        .hero-content h1 { font-size: 3.8rem; margin-bottom: 1rem; }
+        .hero-content .subtitle { font-family: 'Courier New', Courier, monospace; font-size: 1.5rem; color: var(--accent-blue); font-weight: 600; margin-bottom: 1.5rem; height: 30px; }
+        .hero-content .subtitle .cursor { display: inline-block; background-color: var(--text-color); width: 10px; height: 1.5rem; animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+        .hero-content p { font-size: 1.1rem; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            background: var(--accent-blue); color: #fff; padding: 12px 24px;
+            text-decoration: none; border-radius: 5px; font-weight: 600;
+            transition: all 0.3s ease; margin: 0 0.5rem;
+            border: 2px solid var(--accent-blue);
+        }
+        .btn i { margin-right: 8px; }
+        .btn:hover { background-color: #6a9ef5; border-color: #6a9ef5; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(66, 133, 244, 0.3); }
+        .btn-secondary { background: transparent; }
+        .btn-secondary:hover { background: var(--accent-blue); }
+        .social-links { margin-top: 2.5rem; }
+        .social-links a { color: #fff; font-size: 1.8rem; margin: 0 1rem; transition: color 0.3s ease, transform 0.3s ease; display: inline-block; }
+        .social-links a:hover { color: var(--accent-blue); transform: scale(1.2); }
+
+        /* --- Profile Photo --- */
+        .profile-photo {
+            position: relative;
+            margin: 0 auto 2rem auto; 
+            width: 150px; 
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid var(--accent-blue);
+            box-shadow: 0 0 15px rgba(66, 133, 244, 0.5);
+            z-index: 5;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .profile-photo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(66, 133, 244, 0.7);
+        }
+
+        /* Adjust hero content for photo */
+        #home .hero-content {
+            padding-right: 0; 
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+
+        /* --- Stats/Achievements Section --- */
+        #achievements {
+            background-color: var(--primary-color);
+            padding: 3rem 0;
+            margin-top: 0; /* Remove top margin for a compact banner look */
+            margin-bottom: 6rem;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+        .stat-item { 
+            background-color: var(--secondary-color); 
+            padding: 1.5rem; 
+            border-radius: 8px; 
+            border-left: 4px solid var(--accent-blue); 
+            transition: transform 0.4s ease, box-shadow 0.4s ease; 
+        }
+        .stat-item:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); 
+        }
+        .stat-item i { font-size: 2.5rem; color: var(--accent-blue); margin-bottom: 1rem; }
+        .stat-item .number { font-size: 2.5rem; font-weight: 700; color: #fff; }
+        .stat-item p { font-size: 1rem; color: var(--text-color); }
+        
+        /* --- About Section - STAGGERED ANIMATION --- */
+        #about { background-color: var(--bg-color); }
+        .about-content { display: flex; gap: 3rem; align-items: flex-start; }
+        
+        /* Removed staggered animation for simplicity and relying on the parent section animation */
+        .about-text { flex: 2; }
+        .education {
+            flex: 1;
+            background: var(--primary-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-green);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .education:hover {
+            box-shadow: 0 8px 20px rgba(52, 168, 83, 0.3);
+        }
+        
+        .education-item { margin-bottom: 1rem; position: relative; padding-left: 25px; }
+        .education-item:last-child { margin-bottom: 0; }
+        .education-item i { position: absolute; left: 0; top: 5px; color: var(--accent-green); }
+
+        /* --- Skills Section (Original - now replaced by .skills-summary-card) --- */
+        .skills-grid { 
+            /* Kept in CSS for fallback, but HTML is updated */
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 2rem; 
+            margin-top: 3rem; 
+            display: none; /* Hide the old grid structure */
+        }
+        .skill-card { 
+            background: var(--primary-color); 
+            padding: 2rem; 
+            border-radius: 8px; 
+            text-align: center; 
+            transition: transform 0.4s ease, box-shadow 0.4s ease, border-bottom 0.4s ease; /* Added border transition */
+            border-bottom: 4px solid transparent; 
+        }
+        .skill-card:hover { 
+            transform: translateY(-10px); 
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); 
+            border-bottom-color: var(--accent-blue); 
+        }
+        .skill-card i { font-size: 3rem; color: var(--accent-blue); margin-bottom: 1rem; }
+        
+        /* --- Experience Section - MODIFIED FOR COMPACT VIEW --- */
+        #experience {
+            background-color: var(--primary-color);
+            /* Reduced vertical space in the section */
+            padding: 4rem 0; 
+            margin-top: 3rem; 
+            margin-bottom: 3rem;
+        }
+
+        /* Remove all timeline CSS for space saving */
+        .timeline { 
+            margin: 1.5rem auto 0 auto;
+            max-width: 800px;
+        }
+        .timeline::after { content: none; }
+        .timeline-item { width: 100%; padding: 0; position: static; }
+        .timeline-item.left, .timeline-item.right { left: 0; transform: none; opacity: 1; transition-delay: 0s; }
+        .timeline-item::after { content: none; } 
+        
+        /* New Compact Experience Styling */
+        .experience-compact-block {
+            max-width: 800px;
+            margin: 3rem auto 0 auto; /* Center the block */
+        }
+
+        .experience-entry { 
+            padding: 20px 30px; 
+            background-color: var(--secondary-color); 
+            position: relative; 
+            border-radius: 6px; 
+            border-left: 5px solid var(--accent-blue); /* Simple visual marker */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .experience-entry:hover {
+            box-shadow: 0 5px 20px rgba(66, 133, 244, 0.3);
+        }
+        .experience-entry h3 { color: var(--accent-blue); margin-bottom: 0.5rem; }
+
+        .experience-entry ul { padding-left: 20px; }
+        .experience-entry ul li { list-style: none; position: relative; padding-left: 20px; margin-bottom: 5px; font-size: 0.95rem; }
+        .experience-entry ul li::before { content: '\f105'; font-family: 'Font Awesome 6 Free'; font-weight: 900; position: absolute; left: 0; top: 2px; color: var(--accent-blue); font-size: 0.8rem;}
+
+        /* --- Skills Summary Card (Replaces skills-grid) --- */
+        .skills-summary-card { 
+            max-width: 800px;
+            margin: 3rem auto 0 auto; /* Center below experience */
+            background: var(--secondary-color); 
+            padding: 1.5rem 2rem; 
+            border-radius: 8px; 
+            border-top: 4px solid var(--accent-green); /* Differentiate from experience block */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: box-shadow 0.3s ease;
+        }
+        .skills-summary-card:hover {
+            box-shadow: 0 8px 20px rgba(52, 168, 83, 0.3);
+        }
+        .skills-summary-card h3 { 
+            font-size: 1.4rem; 
+            margin-bottom: 1rem; 
+            color: var(--text-color); 
+            display: flex; 
+            align-items: center;
+        }
+        .skills-summary-card p {
+            line-height: 1.8;
+        }
+        
+        /* --- Projects Section --- */
+        #projects { background-color: var(--bg-color); }
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-top: 3rem; }
+        .project-card { 
+            background: var(--secondary-color); 
+            border-radius: 8px; 
+            overflow: hidden; 
+            display: flex; 
+            flex-direction: column; 
+            border: 1px solid var(--border-color); 
+            transition: transform 0.4s ease, box-shadow 0.4s ease, border-top 0.4s ease; 
+            cursor: pointer; /* Indicate clickability for the pop-up */
+        }
+        .project-card:hover { 
+            transform: translateY(-10px); 
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4); 
+            border-top: 5px solid var(--accent-yellow); /* Subtle hover effect */
+        }
+
+        /* --- Project Card & Award/Cert Item Hover: Diagram Pop-up Styles --- */
+        .project-diagram-popup {
+            position: fixed; 
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95); 
+            display: none; 
+            justify-content: center;
+            align-items: center;
+            z-index: 10000; 
+            cursor: pointer; 
+            flex-direction: column;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        /* The JS handles the display toggling, and we use a visible class/style opacity 1 to transition */
+        .project-diagram-popup.is-visible {
+            opacity: 1;
+        }
+
+        .project-diagram-popup .diagram-image {
+            max-width: 90vw; 
+            max-height: 80vh; 
+            width: auto;
+            height: auto;
+            border: 5px solid var(--accent-blue);
+            box-shadow: 0 0 30px rgba(66, 133, 244, 0.7);
+            object-fit: contain; 
+        }
+        
+        .project-diagram-popup p {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #fff;
+            text-align: center;
+        }
+
+        .project-content h3 { color: var(--accent-blue); }
+        .project-tech span { display: inline-block; background: #3b414d; color: var(--text-color); padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; margin: 3px; }
+
+        /* --- Awards & Certs Section --- */
+        #awards {
+            background-color: var(--primary-color);
+        }
+        .awards-container { display: flex; justify-content: space-around; gap: 2rem; flex-wrap: wrap; }
+        .awards-column, .certs-column { flex: 1; min-width: 300px; }
+        .awards-column h3, .certs-column h3 { color: var(--accent-blue); border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; }
+        .award-item, .cert-item { 
+            display: flex; 
+            align-items: center; 
+            margin-bottom: 1rem; 
+            background: var(--secondary-color); 
+            padding: 1rem; 
+            border-radius: 5px; 
+            transition: background-color 0.2s ease, transform 0.2s ease; 
+            position: relative; 
+            overflow: hidden; 
+            cursor: pointer; /* Indicate clickability for the pop-up */
+        }
+        .award-item:hover, .cert-item:hover { 
+            background-color: #313742;
+            transform: translateX(5px);
+        }
+        .award-item i, .cert-item i { font-size: 1.5rem; color: var(--accent-blue); margin-right: 1rem; }
+        
+        /* --- Footer --- */
+        footer { 
+            background: #000; 
+            padding: 4rem 0; /* Increased padding */
+            text-align: center; 
+            margin-top: 0; /* No margin below awards section */
+        }
+        .contact-info { margin-top: 1.5rem; margin-bottom: 1.5rem; }
+        .contact-info a { 
+            color: var(--text-color); 
+            text-decoration: none; 
+            margin: 0 1rem; 
+            transition: color 0.3s ease; 
+            display: inline-block;
+            font-size: 1.1rem;
+        }
+        .contact-info a i { margin-right: 5px; color: var(--accent-blue); }
+        .contact-info a:hover { color: var(--accent-blue); }
+        .footer-bottom { margin-top: 2rem; border-top: 1px solid var(--border-color); padding-top: 1rem; font-size: 0.9rem; }
+        
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; } h2 { font-size: 2rem; }
+            
+            section {
+                padding: 4rem 0;
+                margin-top: 3rem;
+                margin-bottom: 3rem;
+            }
+
+            .nav-links { 
+                position: absolute; 
+                top: 100%; 
+                right: -100%; 
+                width: 100%; 
+                background-color: var(--primary-color); 
+                flex-direction: column; 
+                text-align: center; 
+                transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smooth slide-in */
+                box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+                padding-bottom: 1rem;
+            }
+            .nav-links.active { right: 0; }
+            .nav-links li { margin: 1rem 0; }
+            .menu-toggle { display: block; }
+            .about-content { flex-direction: column; }
+            
+            /* Disable staggered slide on mobile for better flow */
+            #about.visible .about-text, #about.visible .education {
+                transform: translateX(0);
+                opacity: 1;
+                transition-delay: 0s;
+            }
+
+            /* Timeline structure removed, so these mobile rules are less relevant, but kept for safety */
+            .timeline::after { left: 20px; }
+            .timeline-item { width: 100%; padding-left: 60px; padding-right: 10px; }
+            .timeline-item.left, .timeline-item.right { left: 0; }
+            .timeline-item::after { left: 10px; }
+            
+            /* Disable timeline item transition on mobile to avoid layout jump */
+            #experience.visible .timeline-item.left, #experience.visible .timeline-item.right {
+                transform: translateX(0); 
+                opacity: 1; 
+                transition-delay: 0s;
+            }
+
+
+            .profile-photo {
+                width: 120px;
+                height: 120px;
+                margin-bottom: 1.5rem;
+            }
+            #home .hero-content {
+                padding-right: 0;
+                margin-top: 0;
+            }
+            .project-diagram-popup .diagram-image {
+                max-height: 70vh;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="diagramPopup" class="project-diagram-popup" style="display: none;">
+        <img src="" alt="Architectural Diagram" class="diagram-image" id="popupImage">
+        <p>Click anywhere to close</p>
     </div>
-
-
-
-    <div class="middle-container">
-      <div class="profile">
-        <img id="myphoto"src="Css-My Site/images/dp.jpg" alt="dp">
-        <h2>Hi</h2>
-        <p>I am Abhijit Mahajan a Web Developer and AIML Enthusiast <br> based in Pune,Maharashtra.I love to design websites and interested in ML DL technologies.</p>
-        </div>
-<hr>
-      <div class="skills">
-        <h2 class="do">What Can I Do</h2>
-        <div class="skill-row">
-          <img class="skill1" src="Css-My Site/images/bulb.png" alt="ai">
-          <h3>Machine Learning and Deep Learning</h3>
-        </div>
-        <div class="skill-row">
-          <img class="skill2" src="Css-My Site/images/seo.png" alt="">
-          <h3>MERN Stack Development</h3>
-        </div>
-          <div class="skill-row">
-            <img class="skill3" src="Css-My Site/images/coding.png" alt="">
-            <h3>Programming in CPP, Java, and Python</h3>
+    
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-logo">
+                <a href="#home">Abhijit M<span>.</span></a>
             </div>
-      </div>
-      <hr>
+            <ul class="nav-links">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#awards">Recognition</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="menu-toggle" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
 
-      <div class="contact-me">
-        <h2>Get In Touch</h2>
-        <h3>Feel free to contact me.</h3>
-        <br>
-        <a class="btn" href="mailto:abhijitmahajan772@gmail.com">CONTACT ME</a>
-      </div>
-    </div>
+    <section id="home">
+        <div id="particles-js"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="profile-photo">
+                    <img src="/Users/abhijitmahajan/Downloads/photo-Photoroom.png" alt="Abhijit Mahajan Profile Picture">
+                </div>
+                <h1>Abhijit Mahajan</h1>
+                <span class="subtitle" id="typewriter"></span>
+                <p>GCP Certified Data Engineer with 3.8 years of experience in cloud migration and modernization,
+                    Data Pipeline Automation. Skilled in designing scalable data solutions, writing custom pipelines, per-
+                    forming script conversion for optimized performance. Experience in building cost-effective and stable data
+                    ecosystems using Airflow, Dataflow, BigQuery, and Spark.</p>                
+                <a href="#projects" class="btn"><i class="fas fa-briefcase"></i> View My Work</a>
+                <a href="https://drive.google.com/file/d/1hHHxX6B5YW7AP06ONaLKjGeec_Pe4soX/view" class="btn btn-secondary" target="_blank"><i class="fas fa-download"></i> Download CV</a>
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/abhijit-mahajan-9214b41a4/" aria-label="LinkedIn" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" aria-label="GitHub" target="_blank"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr style="border: 0; height: 1px; background: rgba(255, 255, 255, 0.1);">
+
+    <section id="achievements" class="container">
+         <div class="stats-grid">
+            <div class="stat-item">
+                <i class="fas fa-database"></i>
+                <div class="number">4PB+</div>
+                <p>Historical Data Migrated</p>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-cogs"></i>
+                <div class="number">30K+</div>
+                <p>ETL DAGs Automated</p>
+            </div>
+             <div class="stat-item">
+                <i class="fas fa-shipping-fast"></i>
+                <div class="number">3x</div>
+                <p>Ingestion Speed Increase</p>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-check-double"></i>
+                <div class="number">4</div>
+                <p>End-to-End Projects Delivered</p>
+            </div>
+        </div>
+    </section>
+    
+    <hr style="border: 0; height: 1px; background: rgba(255, 255, 255, 0.1);">
+
+    <section id="about" class="container">
+        <br></br><br></br>
+        <h2>About Me</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <h3>GCP Certified Data Engineer🚀</h3>
+                <p>
+                    3.8 years of experience in cloud migration and modernization,
+                    Data Pipeline Automation. Skilled in designing scalable data solutions, writing custom pipelines, per-
+                    forming script conversion for optimized performance. Experience in building cost-effective and stable data
+                    ecosystems using **Airflow, Dataflow, BigQuery, and Spark.**
+                </p>
+                 <p>
+                    I focus on end-to-end data lifecycle management, from complex legacy data migration to implementing 
+                    cutting-edge streaming architectures. My passion lies in delivering **high-performance, cost-efficient** data platforms that drive business intelligence and scalability.
+                </p>
+                 <div class="education" style="margin-top: 2rem;">
+                    <h3 style="margin-bottom: 1rem; color: var(--accent-green);"><i class="fas fa-graduation-cap"></i> Education</h3>
+                    <div class="education-item">
+                        <span style="font-weight: bold;">Bachelor of Engineering in Information Technology</span> <br> 
+                        <span style="font-size: 0.9rem; color: #aaa;">Savitribai Phule Pune University (2019 - 2022)</span>
+                    </div>
+                    <div class="education-item">
+                        <span style="font-weight: bold;">Diploma in Computer Science  </span> <br> 
+                        <span style="font-size: 0.9rem; color: #aaa;">Government Polytechnic Pune(2016- 2029)</span>
+                    </div>
+                </div>
+           </div>
+        </div><br></br><br></br>
+    </section>
+
+    <hr style="border: 0; height: 1px; background: rgba(255, 255, 255, 0.1);">
+    
+    <section id="experience" class="container">
+        
+        <h2>Experience & Skills</h2>
+        
+        <div class="experience-compact-block">
+            <div class="experience-entry">
+                <h3>GCP Data Engineer</h3>
+                <span class="company" style="font-size: 1.1rem; color: #fff; display: block; margin-top: 0.2rem;">Datametica Solutions, Pune (Client: Telecom USA)</span>
+                <span class="date" style="font-size: 0.9rem; font-weight: bold; color: #aaa; margin-bottom: 1rem; display: block;">Feb 2022 - Present</span>
+                <ul>
+                    <li>Completed 4 end-to-end telecom domain cloud migration and modernization projects within timelines,
+                        contributed to project architecture and delivery.</li>
+                        <li>Developed metadata-driven framework to migrate 4PB+ of historical data and 120K tables from
+                        Teradata to BigQuery, supporting SCD0–SCD2 patterns and optimizing load speed from 10GB/min to
+                        30GB/min.</li>
+                        <li>Worked on a metadata- and audit-driven data processing framework to dynamically generate custom
+                        Airflow ETL pipelines from JSON inputs, capable of handling all ETL operations, and automated the
+                        creation of 30,000+ DAGs across all environments.</li>
+                        <li>Designed and built a data quality framework on GCP to automatically validate and reconcile data for
+                        40,000+ tables across 5,000 Airflow pipelines.</li>
+                        <li>Developed solutions to address daily monitoring and health checks of Airflow environments, deployment
+                        accuracy and maintaining consistency between Git and GCP.</li>
+                        <li>Trained a batch of 100 freshers on data engineering tools including Airflow, Dataflow, Cloud Functions,
+                        BigQuery, GCS, Python, and data warehousing concepts, enabling faster project delivery through
+                        automation.</li>
+                        <li>Built and optimized batch and streaming pipelines using Dataflow, Pub/Sub, and BigQuery to ensure
+                        optimized data ingestion from Kafka to BigQuery.</li>                </ul>
+            </div>
+        </div>
+        
+        <div class="skills-summary-card">
+            <h3><i class="fas fa-wrench" style="margin-right: 10px; color: var(--accent-blue);"></i> Technical Skills</h3>
+            <p>
+                <strong>Google Cloud Platform:</strong> <br> BigQuery, Composer(Airflow), Dataproc(Spark), Dataflow(Beam),
+                Cloud Functions, Cloud Storage, Compute Engine, Cloud Run,
+                Pub/Sub, Cloud Secrets, KMS, Dataform, Data Transfer Service(DTS),
+                Data Loss Prevention (DLP)
+                <br><br>
+                <strong>Programming & Scripting:</strong><br>Python, PySpark, SQL, Shell Scripting, and Git.
+                <br>
+                 </p>
+        </div><br></br><br></br>
+    </section>
+    <hr style="border: 0; height: 1px; background: rgba(255, 255, 255, 0.1);">
+    
+    <section id="projects" class="container">
+        <br></br><br></br>
+        <h2>Key Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card" data-diagram-url="https://via.placeholder.com/800x400.png?text=Data+Ingestion+Framework+Diagram">
+                <div class="project-content" style="padding: 1.5rem; flex-grow: 1;">
+                    <h3>Data Ingestion Framework</h3>
+                    <p class="client" style="font-style: italic; color: #aaa; margin-bottom: 1rem;">Client: Telecom USA</p>
+                    <ul>
+                        <li style="margin-bottom: 0.7rem; position: relative; padding-left: 20px; font-size: 0.95rem;"><i class="fas fa-check-circle" style="position: absolute; left: 0; top: 5px; color: var(--accent-green); font-size: 0.8rem;"></i>Tech Used: Python, SQL, Composer(Airflow), BigQuery, BQ DTS,GCS, Teradata TPT & NOS</li>
+                        <li style="margin-bottom: 0.7rem; position: relative; padding-left: 20px; font-size: 0.95rem;"><i class="fas fa-check-circle" style="position: absolute; left: 0; top: 5px; color: var(--accent-green); font-size: 0.8rem;"></i>Developed a metadata and audit-driven data ingestion framework between Teradata and BigQuery</li>
+                        <li style="margin-bottom: 0.7rem; position: relative; padding-left: 20px; font-size: 0.95rem;"><i class="fas fa-check-circle" style="position: absolute; left: 0; top: 5px; color: var(--accent-green); font-size: 0.8rem;"></i>Supported bi-directional data load Teradata → BigQuery and BigQuery → Teradata write-back</li>
+                        <li style="margin-bottom: 0.7rem; position: relative; padding-left: 20px; font-size: 0.95rem;"><i class="fas fa-check-circle" style="position: absolute; left: 0; top: 5px; color: var(--accent-green); font-size: 0.8rem;"></i>Supported batch and incremental data loads, including SCD0, SCD1, and SCD2 scenarios</li>
+                        <li style="margin-bottom: 0.7rem; position: relative; padding-left: 20px; font-size: 0.95rem;"><i class="fas fa-check-circle" style="position: absolute; left: 0; top: 5px; color: var(--accent-green); font-size: 0.8rem;"></i>Implemented automatic failure handling and retry mechanisms for reliable data loads</li>
+                        <li style="margin-bottom: 0.7rem; position: relative; padding-left: 20px; font-size: 0.95rem;"><i class="fas fa-check-circle" style="position: absolute; left: 0; top: 5px; color: var(--accent-green); font-size: 0.8rem;"></i>Optimized pipeline architecture, improving throughput from 10 GB/min to 30 GB/min</li>
+                        <li style="margin-bottom: 0.7rem; position: relative; padding-left: 20px; font-size: 0.95rem;"><i class="fas fa-check-circle" style="position: absolute; left: 0; top: 5px; color: var(--accent-green); font-size: 0.8rem;"></i>Migrated and processed 4 PB+ of data across 120K tables using the framework</li>                    </ul>
+                </div>
+                <div class="project-tech" style="padding: 1rem 1.5rem; background: var(--primary-color); border-top: 1px solid var(--border-color);">
+                    <span>Python</span> <span>SQL</span> <span>Airflow</span> <span>BigQuery</span> <span>GCS</span> <span>Teradata TPT</span>
+                </div>
+            </div>
+            
+            <div class="project-card" data-diagram-url="https://via.placeholder.com/800x400.png?text=Automated+Governance+Architecture+Diagram">
+                <div class="project-content" style="padding: 1.5rem; flex-grow: 1;">
+                    <h3>Automated Data Governance & View Creation Framework</h3>
+                    <p class="client" style="font-style: italic; color: #aaa; margin-bottom: 1rem;">Client: Telecom USA</p>
+                    <ul>
+                        <li style="margin-bottom: 0.7rem; position: relative; padding-left: 20px; font-size: 0.95rem;"><i class="fas fa-check-circle" style="position: absolute; left: 0; top: 5px; color: var(--accent-green); font-size: 0.8rem;"></i>Tech Stack: BigQuery, GCS, SQL, Python, Shell Scripting</li>
+                        <li style="margin-bottom: 0.7rem; position: relative; padding-left: 20px; font-size: 0.95rem;"><i class="fas fa-check-circle" style="position: absolute; left: 0; top: 5px; color: var(--accent-green); font-size: 0.8rem;"></i>Developed data governance automation framework to ensure secure, policy-compliant data access across
+                        multiple user personas</li>
+                        <li style="margin-bottom: 0.7rem; position: relative; padding-left: 20px; font-size: 0.95rem;"><i class="fas fa-check-circle" style="position: absolute; left: 0; top: 5px; color: var(--accent-green); font-size: 0.8rem;"></i>Automated role based view creation and data redaction in BigQuery, reducing manual effort by 5–15 %
+                        and improving delivery speed</li>
+                        <li style="margin-bottom: 0.7rem; position: relative; padding-left: 20px; font-size: 0.95rem;"><i class="fas fa-check-circle" style="position: absolute; left: 0; top: 5px; color: var(--accent-green); font-size: 0.8rem;"></i>Implemented governance controls such as PII masking and GSAM filtering, generating tailored data
+                        views (All Data, No-GSAM, Redacted)</li>
+                        <li style="margin-bottom: 0.7rem; position: relative; padding-left: 20px; font-size: 0.95rem;"><i class="fas fa-check-circle" style="position: absolute; left: 0; top: 5px; color: var(--accent-green); font-size: 0.8rem;"></i>Designed change-aware engine using GCS triggers and Cloud Functions to detect policy updates and
+                        refresh only impacted views</li>
+                        <li style="margin-bottom: 0.7rem; position: relative; padding-left: 20px; font-size: 0.95rem;"><i class="fas fa-check-circle" style="position: absolute; left: 0; top: 5px; color: var(--accent-green); font-size: 0.8rem;"></i>Integrated auditing and error-tracking in BigQuery for traceability and compliance visibility</li></ul>
+                </div>
+                <div class="project-tech" style="padding: 1rem 1.5rem; background: var(--primary-color); border-top: 1px solid var(--border-color);">
+                    <span>BigQuery</span> <span>GCS</span> <span>SQL</span> <span>Python</span> <span>Cloud Functions</span>
+                </div>
+            </div>
+        </div><br></br><br></br>
+    </section>
+
+    <hr style="border: 0; height: 1px; background: rgba(255, 255, 255, 0.1);">
+    
+    <section id="awards" class="container"><br></br><br></br>
+        <h2>Recognition & Certifications</h2>
+        <div class="awards-container">
+            <div class="awards-column">
+                <h3><i class="fas fa-trophy"></i> Awards</h3>
+                <div class="award-item" data-diagram-url="https://via.placeholder.com/800x600.png?text=Rising+Star+Award+Certificate">
+                    <i class="fas fa-star" style="color: var(--accent-yellow);"></i>
+                    <div class="award-info"><span style="font-weight: bold; display: block;">Datametica Spot Award</span><p style="font-size: 0.9rem; color: #aaa;">October'25</p></div>
+                </div>
+                <div class="award-item" data-diagram-url="https://via.placeholder.com/800x600.png?text=Rising+Star+Award+Certificate">
+                    <i class="fas fa-star" style="color: var(--accent-yellow);"></i>
+                    <div class="award-info"><span style="font-weight: bold; display: block;">Datametica Rising Star Award</span><p style="font-size: 0.9rem; color: #aaa;">October'24</p></div>
+                </div>
+                <div class="award-item" data-diagram-url="https://via.placeholder.com/800x600.png?text=Rising+Star+Award+Certificate">
+                    <i class="fas fa-star" style="color: var(--accent-yellow);"></i>
+                    <div class="award-info"><span style="font-weight: bold; display: block;">Datametica Spot Award</span><p style="font-size: 0.9rem; color: #aaa;">July'23</p></div>
+                </div>
+                <div class="award-item" data-diagram-url="https://via.placeholder.com/800x600.png?text=Rising+Star+Award+Certificate">
+                    <i class="fas fa-star" style="color: var(--accent-yellow);"></i>
+                    <div class="award-info"><span style="font-weight: bold; display: block;">Datametica Spot Award</span><p style="font-size: 0.9rem; color: #aaa;">October'22</p></div>
+                </div>
+            </div>
+            
+            <div class="certs-column">
+                <h3><i class="fas fa-certificate"></i> Certifications</h3>
+                <div class="cert-item" data-diagram-url="https://via.placeholder.com/800x600.png?text=GCP+Data+Engineer+Certificate">
+                    <i class="fas fa-cloud-upload-alt" style="color: var(--accent-blue);"></i>
+                    <div class="cert-info"><span style="font-weight: bold; display: block;">Google Cloud Professional Data Engineer</span><p style="font-size: 0.9rem; color: #aaa;">October'24</p></div>
+                </div>
+
+                <div class="cert-item" data-diagram-url="https://via.placeholder.com/800x600.png?text=GCP+Data+Engineer+Certificate">
+                    <i class="fas fa-cloud-upload-alt" style="color: var(--accent-blue);"></i>
+                    <div class="cert-info"><span style="font-weight: bold; display: block;">Google Cloud Associate Data Practitioner</span><p style="font-size: 0.9rem; color: #aaa;">October'24</p></div>
+                </div>
+                <div class="cert-item" data-diagram-url="https://via.placeholder.com/800x600.png?text=GCP+Data+Engineer+Certificate">
+                    <i class="fas fa-cloud-upload-alt" style="color: var(--accent-blue);"></i>
+                    <div class="cert-info"><span style="font-weight: bold; display: block;">Astronomer Certification DAG Authoring for Apache Airflow 3</span><p style="font-size: 0.9rem; color: #aaa;">October'24</p></div>
+                </div>
+                <div class="cert-item" data-diagram-url="https://via.placeholder.com/800x600.png?text=GCP+Data+Engineer+Certificate">
+                    <i class="fas fa-cloud-upload-alt" style="color: var(--accent-blue);"></i>
+                    <div class="cert-info"><span style="font-weight: bold; display: block;">Astronomer Certification for Apache Airflow Fundamentals</span><p style="font-size: 0.9rem; color: #aaa;">October'24</p></div>
+                </div>
+                </div>
+        </div><br></br><br></br>
+    </section>
+    
+    <hr style="border: 0; height: 1px; background: rgba(255, 255, 255, 0.1);">
+
+    <footer id="contact">
+        <div class="container"><br></br><br></br>
+            <h2>Get In Touch</h2>
+            <div class="contact-info">
+                <a href="mailto:abhijitmahajan772@gmail.com"><i class="fas fa-envelope"></i> abhijitmahajan772@gmail.com</a>
+                <a href="tel:+91 7020203767"><i class="fas fa-phone"></i> +91 7020203767</a>
+                <a href="#"><i class="fas fa-map-marker-alt"></i> Pune, India</a>
+            </div>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/abhijit-mahajan-9214b41a4/" aria-label="LinkedIn" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="#" aria-label="GitHub" target="_blank"><i class="fab fa-github"></i></a>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2025 Abhijit Mahajan. Designed for optimization and performance.
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Typewriter Effect
+            const text = "GCP Certified Data Engineer";
+            const speed = 50;
+            let i = 0;
+            const typewriterElement = document.getElementById('typewriter');
+
+            function typeWriter() {
+                if (typewriterElement && i < text.length) {
+                    typewriterElement.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, speed);
+                } else if (typewriterElement) {
+                    // Add blinking cursor after text is typed
+                    typewriterElement.innerHTML += '<span class="cursor"></span>';
+                }
+            }
+
+            // 2. Intersection Observer for Scroll Animation
+            const sections = document.querySelectorAll('section');
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.2 // Trigger when 20% of the section is visible
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        // observer.unobserve(entry.target); // Optional: Stop observing once it's visible
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+            
+            // 3. Navbar Scrolling Shadow
+            const navbar = document.querySelector('.navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+            
+            // 4. Mobile Menu Toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+
+            menuToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+            
+            // Close menu when a link is clicked (mobile)
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                    }
+                });
+            });
+
+            // 5. Active Link Highlighting
+            const navAnchors = document.querySelectorAll('.nav-links a');
+            
+            const sectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navAnchors.forEach(a => {
+                            a.classList.remove('active');
+                            if (a.getAttribute('href') === `#${entry.target.id}`) {
+                                a.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, {
+                root: null,
+                rootMargin: '-50% 0px -50% 0px', // Center of viewport
+                threshold: 0
+            });
+            
+            sections.forEach(section => {
+                sectionObserver.observe(section);
+            });
 
 
-    <div class="bottom-container">
+            // 6. Project/Award Diagram Pop-up
+            const popup = document.getElementById('diagramPopup');
+            const popupImage = document.getElementById('popupImage');
+            const clickableItems = document.querySelectorAll('.project-card, .award-item, .cert-item');
 
-    <a href="https://www.linkedin.com/in/abhijit-mahajan-9214b41a4/"><img style="width:2%;" src="linkedin-brands.svg" alt=""></a>
-    <a href="https://github.com/AbhijitMahajan14"><img style="width:2%;" src="github-brands.svg" alt="" ></a>
-      <p>© 2020 Abhijit Mahajan.</p>
-    </div>
-  </body>
+            clickableItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const imageUrl = item.getAttribute('data-diagram-url');
+                    if (imageUrl) {
+                        popupImage.src = imageUrl;
+                        popup.style.display = 'flex';
+                        // Use a timeout for the opacity transition
+                        setTimeout(() => popup.classList.add('is-visible'), 10);
+                    }
+                });
+            });
+
+            popup.addEventListener('click', (e) => {
+                if (e.target === popup || e.target === popupImage) {
+                    popup.classList.remove('is-visible');
+                    // Hide display property after transition finishes
+                    setTimeout(() => popup.style.display = 'none', 300); 
+                }
+            });
+            
+            // Initialize typewriter
+            typeWriter();
+        });
+    </script>
+    </body>
 </html>
